@@ -1,0 +1,42 @@
+<html lang="en">
+    <head>
+        <meta charset ="UTF-8">
+        <meta name ="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Medicine Tracker</title>
+        <link rel="stylesheet"href="{{url_for('static',filename='style.css')}}">
+    </head>
+    <body>
+        <nav>
+            <div class="logo">💊 MediTrack</div>
+            <ul>
+                <li><a href ="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/add-medicine">Add Medicine</a></li>
+                <li><a href="/medicines">My Medicines</a></li>
+                <li><a href="/reminders">Reminders</a></li>
+            </ul>
+            <a href ="login" class="login-btn">Login</a>
+        </nav>
+        <div class="hero">
+            <h1>Never Let a Medicine Expire Again!</h1>
+            <p>Track your family's medicines, get reminders before expiry and stay safe.</p>
+            <a href ="/signup" class="signup-btn">Get started free</a>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <h3>💊 Track Medicines</h3>
+                <p> Recieve email alrets 30 dyas before ay medicine expires.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔔 Get Reminders</h3>
+                <p>Recieve email alerts 30 days before any medicine expires.</p>
+            </div>
+            <div class="feature-card">
+                <h3>👨‍👩‍👧 Family Safety</h3>
+                <p>Keep your entire family safe from expired medicines.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+

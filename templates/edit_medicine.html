@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Medicine - MediTrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">💊 MediTrack</div>
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/add-medicine">Add Medicine</a></li>
+            <li><a href="/medicines">My Medicines</a></li>
+            <li><a href="/reminders">Reminders</a></li>
+        </ul>
+        <a href="/logout" class="login-btn">Logout</a>
+    </nav>
+
+    <div class="form-container">
+        <h2>✏️ Edit Medicine</h2>
+        <p>Update your medicine details</p>
+
+        <form method="POST" action="/edit-medicine/{{ med['id'] }}">
+            <label>Medicine Name *</label>
+            <input type="text" name="name" value="{{ med['name'] }}" required>
+
+            <label>Manufacture Date</label>
+            <input type="date" name="manufacture_date" value="{{ med['manufacture_date'] or '' }}">
+
+            <label>Expiry Date *</label>
+            <input type="date" name="expiry_date" value="{{ med['expiry_date'] }}" required>
+
+            <label>Quantity *</label>
+            <input type="number" name="quantity" value="{{ med['quantity'] }}" required>
+
+            <label>Dosage per day</label>
+            <input type="number" name="dosage" value="{{ med['dosage'] or '' }}">
+
+            <label>Frequency</label>
+            <select name="frequency">
+                <option value="">Select Frequency</option>
+                <option value="daily" {% if med['frequency'] == 'daily' %}selected{% endif %}>Daily</option>
+                <option value="weekly" {% if med['frequency'] == 'weekly' %}selected{% endif %}>Weekly</option>
+                <option value="monthly" {% if med['frequency'] == 'monthly' %}selected{% endif %}>Monthly</option>
+            </select>
+
+            <label>When to Take</label>
+            <input type="text" name="when_to_take" value="{{ med['when_to_take'] or '' }}" 
+                   placeholder="e.g. after breakfast">
+
+            <label>Purpose</label>
+            <input type="text" name="purpose" value="{{ med['purpose'] or '' }}" 
+                   placeholder="e.g. fever, cold">
+
+            <label>Side Effects</label>
+            <input type="text" name="side_effects" value="{{ med['side_effects'] or '' }}" 
+                   placeholder="e.g. drowsiness">
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <p class="redirect"><a href="/medicines">← Back to My Medicines</a></p>
+    </div>
+
+</body>
+</html>

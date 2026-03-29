@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminders - MediTrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">💊 MediTrack</div>
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/add-medicine">Add Medicine</a></li>
+            <li><a href="/medicines">My Medicines</a></li>
+            <li><a href="/reminders">Reminders</a></li>
+        </ul>
+        <a href="/logout" class="login-btn">Logout</a>
+    </nav>
+
+    <div class="dashboard">
+        <h2>🔔 Reminders</h2>
+        <p>Medicines that need your attention</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+        <a href="/send-reminders"class="signup-btn"style="display:inline-block;margin-bottom:20px;">
+             📧 Send Reminder Email
+        </a>
+        <!-- EXPIRED -->
+        <div class="alert-section" style="margin-top:30px;">
+            <h3>🚨 Expired Medicines</h3>
+            {% if expired_medicines %}
+                <table class="medicine-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Expiry Date</th>
+                        <th>Quantity</th>
+                        <th>Purpose</th>
+                    </tr>
+                    {% for med in expired_medicines %}
+                    <tr class="expired-row">
+                        <td>{{ med['name'] }}</td>
+                        <td>{{ med['expiry_date'] }}</td>
+                        <td>{{ med['quantity'] }}</td>
+                        <td>{{ med['purpose'] or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="no-alert">No expired medicines ✅</p>
+            {% endif %}
+        </div>
+
+        <!-- EXPIRING SOON -->
+        <div class="alert-section" style="margin-top:20px;">
+            <h3>⚠️ Expiring in 30 Days</h3>
+            {% if expiring_medicines %}
+                <table class="medicine-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Expiry Date</th>
+                        <th>Days Left</th>
+                        <th>Purpose</th>
+                    </tr>
+                    {% for med in expiring_medicines %}
+                    <tr class="expiring-row">
+                        <td>{{ med['name'] }}</td>
+                        <td>{{ med['expiry_date'] }}</td>
+                        <td>{{ med['days_left'] }} days</td>
+                        <td>{{ med['purpose'] or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="no-alert">No medicines expiring soon ✅</p>
+            {% endif %}
+        </div>
+
+        <!-- LOW STOCK -->
+        <div class="alert-section" style="margin-top:20px;">
+            <h3>📦 Low Stock Medicines</h3>
+            {% if low_stock_medicines %}
+                <table class="medicine-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity Left</th>
+                        <th>Frequency</th>
+                        <th>Purpose</th>
+                    </tr>
+                    {% for med in low_stock_medicines %}
+                    <tr>
+                        <td>{{ med['name'] }}</td>
+                        <td>{{ med['quantity'] }}</td>
+                        <td>{{ med['frequency'] or '-' }}</td>
+                        <td>{{ med['purpose'] or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="no-alert">All medicines well stocked ✅</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

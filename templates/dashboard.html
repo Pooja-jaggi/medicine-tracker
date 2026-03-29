@@ -1,0 +1,64 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width,intial-scale=1.0">
+        <title>Dashboard-Meditrack</title>
+        <link rel="stylesheet"href ="{{url_for('static',filename='style.css')}}">
+    </head>
+    <body>
+        <nav>
+            <div class="logo">💊 MediTrack</div>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href ="/add-medicine">Add Medicine</a></li>
+                <li><a href="/medicines">My Medicines</a></li>
+                <li><a href="/reminders">Reminders</a></li>
+            </ul>
+            <a href="/logout" class="login-btn">Logout</a>
+        </nav>
+        <div class="dashboard">
+            <h2> Welcome back,{{user_name}}!👋</h2>
+            <p>Here's your medicine summary</p>
+
+            <div class="cards">
+                <div class="card total">
+                    <h3>{{total}}</h3>
+                    <p>Total Medicines</p>
+                </div>
+                <div class="card safe                            ">
+                    <h3>{{safe}}</h3>
+                    <p>Safe✅</p>
+                </div>
+                <div class="card warning">
+                    <h3>{{expiring}}</h3>
+                    <p>Expiring Soon⚠️</p>
+                </div>
+                <div class="card danger">
+                    <h3>{{expired}}</h3>
+                    <p>Expired🚨</p>
+                </div>
+                <div class="alert-section">
+                    <h3>⚠️Medicine Expiring in 30 days</h3>
+                    {% if expiring_medicines %}
+                    <table class="medicine-table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Expiry Date</th>
+                            <th>Quantity</th>
+                        </tr>
+                        {% for medicine in expiring_medicines %}
+                        <tr>
+                            <td>{{medicine['name']}}</td>
+                            <td>{{medicine['expiry_date']}}</td>
+                            <td>{{medicine['quantity']}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% else %}
+                    <p class="no-alert">No medicines expiring soon.You're safe!✅</p>
+                    {% endif %}
+                </div>
+                <a href="/add-medicine" class="signup-btn">Add new medicine</a>
+        </div>
+    </body>
+</html>
